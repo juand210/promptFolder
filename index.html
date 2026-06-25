@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SourceContextor - Prepara tu código para ChatGPT, Claude y Gemini</title>
+    <meta name="description" content="Sube o arrastra la carpeta de tu proyecto local, procesa los archivos y genera el contexto estructurado con su árbol de directorios listo para copiar a IAs como ChatGPT, Claude o Gemini. 100% local y seguro.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-container">
+            <div class="header-main-row">
+                <div class="logo">
+                    <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                        <path d="M12 11v6"></path>
+                        <path d="M9 14h6"></path>
+                    </svg>
+                    <h1>Source<span>Contextor</span></h1>
+                </div>
+                <!-- Botón de cambio de tema -->
+                <button type="button" id="btn-theme-toggle" class="btn-theme-toggle" aria-label="Cambiar tema">
+                    <svg class="theme-icon-sun hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+            <p class="tagline">Convierte tu código fuente en el contexto perfecto para IAs. 100% en tu navegador.</p>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        <!-- ESPACIO PARA BANNER DE GOOGLE ADSENSE (LATERAL IZQUIERDO) -->
+        <aside class="adsense-sidebar adsense-left">
+            <div class="adsense-placeholder">
+                <span class="ads-label">Publicidad</span>
+                <!-- ESPACIO PARA BANNER DE GOOGLE ADSENSE -->
+                <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
+            </div>
+        </aside>
+
+        <main class="app-container">
+            <!-- Sección de Configuración y Carga -->
+            <section class="card panel-upload">
+                <div class="card-header">
+                    <div class="step-num">1</div>
+                    <h2>Cargar Proyecto & Configuración</h2>
+                </div>
+                
+                <div class="card-body">
+                    <!-- Drop Zone -->
+                    <div id="drop-zone" class="drop-zone">
+                        <svg class="drop-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <p class="drop-text-main">Arrastra y suelta aquí la carpeta de tu proyecto</p>
+                        <p class="drop-text-sub">o utiliza uno de los siguientes botones</p>
+                        
+                        <div class="upload-buttons">
+                            <!-- Botón File System Access API -->
+                            <button type="button" id="btn-select-folder-api" class="btn btn-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                                Seleccionar Carpeta
+                            </button>
+                            
+                            <!-- Fallback input tradicional -->
+                            <label for="folder-input-legacy" class="btn btn-secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                Método Alternativo
+                            </label>
+                            <input type="file" id="folder-input-legacy" webkitdirectory directory multiple class="hidden-input">
+                        </div>
+                        <div id="selected-folder-info" class="selected-folder-info hidden">
+                            <span class="folder-name-pill">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                                <span id="current-folder-name">Ninguna carpeta cargada</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Configuración de Ignorados -->
+                    <div class="config-section">
+                        <h3>Opciones de Exclusión</h3>
+                        
+                        <div class="checkbox-grid">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="ignore-modules" checked>
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">node_modules <small class="desc">(Dependencias JS)</small></span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="ignore-git" checked>
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">.git <small class="desc">(Historial Git)</small></span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="ignore-venv" checked>
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">venv / .venv / env <small class="desc">(Python)</small></span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="ignore-builds" checked>
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">dist / build / .next / .expo <small class="desc">(Builds)</small></span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="ignore-locks" checked>
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">Archivos de bloqueo <small class="desc">(*-lock.*)</small></span>
+                            </label>
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="ignore-media" checked>
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">Archivos binarios / multimedia <small class="desc">(Imágenes/Videos)</small></span>
+                            </label>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="custom-ignores">Exclusiones personalizadas (separadas por comas):</label>
+                            <input type="text" id="custom-ignores" placeholder="ej. temp/, secrets.json, *.log, config/local.js" value="">
+                            <small class="helper-text">Puedes especificar nombres de archivos, carpetas o extensiones.</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de Resultados -->
+            <section class="card panel-results">
+                <div class="card-header">
+                    <div class="step-num">2</div>
+                    <h2>Resultado y Estadísticas</h2>
+                </div>
+
+                <div class="card-body">
+                    <!-- Estadísticas en Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-title">Archivos Procesados</span>
+                            <span id="stat-files" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-title">Caracteres Totales</span>
+                            <span id="stat-chars" class="stat-value">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-title">Tokens Estimados</span>
+                            <span id="stat-tokens" class="stat-value">0</span>
+                            <small class="stat-note">(Aprox. 1 token = 4 caracteres)</small>
+                        </div>
+                    </div>
+
+                    <!-- Acciones del Output -->
+                    <div class="action-bar">
+                        <button type="button" id="btn-copy" class="btn btn-success btn-large" disabled>
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                            <span id="btn-copy-text">Copiar al Portapapeles</span>
+                        </button>
+                        
+                        <button type="button" id="btn-download" class="btn btn-secondary btn-large" disabled>
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Descargar como .txt
+                        </button>
+                    </div>
+
+                    <!-- Output Preview -->
+                    <div class="output-container">
+                        <div class="output-header">
+                            <span>Previsualización del Contexto Generado</span>
+                            <span id="copy-toast" class="toast hidden">¡Copiado con éxito!</span>
+                        </div>
+                        <textarea id="output-textarea" readonly placeholder="El árbol del proyecto y el contenido de los archivos procesados se mostrará aquí una vez cargues una carpeta..."></textarea>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- ESPACIO PARA BANNER DE GOOGLE ADSENSE (LATERAL DERECHO) -->
+        <aside class="adsense-sidebar adsense-right">
+            <div class="adsense-placeholder">
+                <span class="ads-label">Publicidad</span>
+                <!-- ESPACIO PARA BANNER DE GOOGLE ADSENSE -->
+                <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
+            </div>
+        </aside>
+    </div>
+
+    <!-- Sección FAQ SEO Simplificada y Colapsable -->
+    <section class="seo-faq-section">
+        <div class="seo-container">
+            <h2>Preguntas Frecuentes</h2>
+            
+            <div class="faq-accordion">
+                <details class="faq-item">
+                    <summary>¿Cómo pasar todo tu código a ChatGPT o Claude de una sola vez?</summary>
+                    <p>Arrastra tu carpeta raíz para generar un archivo consolidado. Este contendrá el árbol visual del repositorio y el código de cada archivo envuelto en delimitadores claros (<code>--- INICIO ARCHIVO ---</code> y <code>--- FIN ARCHIVO ---</code>) que la IA interpretará perfectamente.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>¿Cómo dar el contexto completo de un repositorio a Gemini?</summary>
+                    <p>Usa esta herramienta para generar el archivo de texto estructurado de tu proyecto y luego súbelo directamente al chat o pégalo en el prompt de Gemini. Su amplia ventana de contexto leerá toda la estructura y el código fuente de inmediato.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>¿Es seguro cargar mis archivos y carpetas de código aquí?</summary>
+                    <p><strong>Sí, 100% seguro.</strong> El procesamiento se ejecuta por completo en tu navegador (Client-side JavaScript). Tus archivos jamás se envían a servidores ni se almacenan en ninguna base de datos; todo ocurre localmente en tu ordenador.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>¿Cómo estima los tokens la herramienta?</summary>
+                    <p>Utiliza una aproximación estándar y veloz de 1 token equivalente a 4 caracteres de texto plano o código en inglés. Esto te permite tener una referencia inmediata del consumo de contexto sin ralentizar el navegador.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>¿Qué archivos y carpetas se excluyen automáticamente?</summary>
+                    <p>Se omiten por defecto las carpetas de dependencias y temporales (<code>node_modules</code>, <code>.git</code>, <code>venv</code>, <code>dist</code>, <code>.next</code>), archivos de bloqueo (<code>package-lock.json</code>, etc.) y ficheros multimedia o binarios comunes para optimizar el límite de contexto.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <footer class="app-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 SourceContextor. Herramienta gratuita para desarrolladores, desarrollada con ❤️ y 100% en el lado del cliente.</p>
+        </div>
+    </footer>
+
+    <!-- Lógica de la aplicación -->
+    <script src="app.js"></script>
+</body>
+</html>
