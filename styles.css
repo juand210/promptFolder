@@ -204,9 +204,10 @@ body.light-theme .logo h1 {
     max-width: 600px;
 }
 
-/* Layout Principal de tres columnas */
+/* Layout Principal de tres columnas (Modificado para centrado absoluto) */
 .main-layout {
     display: flex;
+    justify-content: center;
     max-width: 1600px;
     width: 100%;
     margin: 2rem auto;
@@ -216,7 +217,7 @@ body.light-theme .logo h1 {
 }
 
 .app-container {
-    flex: 1;
+    flex: 1 1 1100px;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -224,9 +225,10 @@ body.light-theme .logo h1 {
     min-width: 0; /* Evita que los flex items desborden */
 }
 
-/* Paneles Publicidad (AdSense) */
+/* Paneles Publicidad (AdSense - Modificado con ancho flexible estricto) */
 .adsense-sidebar {
     width: var(--sidebar-width);
+    flex: 0 0 var(--sidebar-width);
     flex-shrink: 0;
     display: none; /* Oculto por defecto en móviles/tablets */
 }
@@ -689,7 +691,7 @@ body.light-theme .logo h1 {
     line-height: 1.6;
 }
 
-/* Sección SEO FAQ */
+/* Sección FAQ SEO */
 .seo-faq-section {
     background: var(--bg-base);
     border-top: 1px solid var(--border-color);
